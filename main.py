@@ -86,7 +86,7 @@ def generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, 
 
 # Function to generate non-overlapping bounding boxes
 def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_y, min_distance):
-    max_attempts=10
+    max_attempts=100
     bounding_boxes = []
     centers = []
     

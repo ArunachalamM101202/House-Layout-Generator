@@ -107,7 +107,7 @@ def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_
             if not check_center_collision(new_center, centers, min_distance):
                 bounding_boxes.append({'bbox': bounding_box, 'color': color, 'name': room_name})
                 centers.append(new_center)
-                break
+                #break
                 
             attempts+=1
     

@@ -1,5 +1,5 @@
 streamlit
-PIL
+Pillow
 google-generativeai
 python-dotenv
 matplotlib

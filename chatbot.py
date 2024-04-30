@@ -118,13 +118,13 @@ def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_
     for room in room_data:
         room_name = room['name']
         width = room['width']
-        height = room['height']
+        length = room['length']
         direction = room['direction']
         color = room['color']
 
         attempts=0
         while attempts<max_attempts:
-            bounding_box = generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, width, height)
+            bounding_box = generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, width, length)
             center_x = (bounding_box[0] + bounding_box[2]) / 2
             center_y = (bounding_box[1] + bounding_box[3]) / 2
             new_center = (center_x, center_y)

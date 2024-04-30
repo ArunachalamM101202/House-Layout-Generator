@@ -86,18 +86,44 @@ def generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, 
     return (x1, y1, x2, y2)
 
 # Function to generate non-overlapping bounding boxes
+# def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_y, min_distance):
+#     bounding_boxes = []
+#     centers = []
+    
+#     for room in room_data:
+#         room_name = room['name']
+#         width = room['width']
+#         height = room['length']
+#         direction = room['direction']
+#         color = room['color']
+        
+#         while True:
+#             bounding_box = generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, width, height)
+#             center_x = (bounding_box[0] + bounding_box[2]) / 2
+#             center_y = (bounding_box[1] + bounding_box[3]) / 2
+#             new_center = (center_x, center_y)
+            
+#             if not check_center_collision(new_center, centers, min_distance):
+#                 bounding_boxes.append({'bbox': bounding_box, 'color': color, 'name': room_name})
+#                 centers.append(new_center)
+#                 break
+    
+#     return bounding_boxes
+
 def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_y, min_distance):
+    max_attempts=100
     bounding_boxes = []
     centers = []
     
     for room in room_data:
         room_name = room['name']
         width = room['width']
-        height = room['length']
+        height = room['height']
         direction = room['direction']
         color = room['color']
-        
-        while True:
+
+        attempts=0
+        while attempts<max_attempts:
             bounding_box = generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, width, height)
             center_x = (bounding_box[0] + bounding_box[2]) / 2
             center_y = (bounding_box[1] + bounding_box[3]) / 2
@@ -106,7 +132,9 @@ def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_
             if not check_center_collision(new_center, centers, min_distance):
                 bounding_boxes.append({'bbox': bounding_box, 'color': color, 'name': room_name})
                 centers.append(new_center)
-                break
+                #break
+                
+            attempts+=1
     
     return bounding_boxes
 

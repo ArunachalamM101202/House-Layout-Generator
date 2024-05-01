@@ -267,7 +267,7 @@ min_x = 0
 max_x = 100
 min_y = 0
 max_y = 100
-min_distance = 10  # Minimum distance between centers
+min_distance = 5  # Minimum distance between centers
 
 # Streamlit app
 def main():

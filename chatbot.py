@@ -35,7 +35,7 @@ min_x = 0
 max_x = 100
 min_y = 0
 max_y = 100
-min_distance = 10
+min_distance = 5 # changed min distance to get more overlapping layouts
 
 # Function to generate bounding box with direction
 def generate_bounding_box_with_direction(min_x, max_x, min_y, max_y, direction, width, height):

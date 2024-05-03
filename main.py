@@ -355,6 +355,7 @@ from dotenv import load_dotenv
 import os
 import cv2
 import numpy as np
+import json
 from io import BytesIO
 
 # Load environment variables
@@ -459,7 +460,7 @@ def generate_non_overlapping_bounding_boxes(room_data, min_x, max_x, min_y, max_
             new_center = (center_x, center_y)
             
             if not check_center_collision(new_center, centers, min_distance):
-                bounding_boxes.append({'bbox': bounding_box, 'color': color, 'name': room_name})
+                bounding_boxes.append({'bbox': bounding_box, 'color': color, 'name': room_name,'direction':direction})
                 centers.append(new_center)
                 break
     
@@ -660,7 +661,15 @@ def main():
             with BytesIO() as buffer:
                 np.save(buffer, binary_data)
                 buffer.seek(0)
-                st.download_button(label="Download kp_final_array.npy", data=buffer, file_name="kp_final_array.npy", mime="application/octet-stream")
+                st.download_button(label="Download Layout.npy", data=buffer, file_name="layout.npy", mime="application/octet-stream")
+
+            ### json
+            with st.spinner("Creating JSON..."):
+                json_data = json.dumps(bounding_boxes)
+            with BytesIO() as json_buffer:
+                json_buffer.write(json_data.encode())
+                json_buffer.seek(0)
+                st.download_button(label="Download Layout.json", data=json_buffer, file_name="layout.json", mime="application/json")
 
 
 
@@ -697,6 +706,20 @@ def main():
                 img_path = visualize_bounding_boxes(bounding_boxes, min_x, max_x, min_y, max_y)
                 st.image(img_path, caption='Generated House Layout', use_column_width=True)
                 st.success("House Layout has been Generated")
+                binary_data = np.load("kp_final_array.npy")
+                with BytesIO() as buffer:
+                    np.save(buffer, binary_data)
+                    buffer.seek(0)
+                    st.download_button(label="Download Layout.npy", data=buffer, file_name="layout.npy", mime="application/octet-stream")
+                
+                ### json
+                with st.spinner("Creating JSON..."):
+                    json_data = json.dumps(bounding_boxes)
+                with BytesIO() as json_buffer:
+                    json_buffer.write(json_data.encode())
+                    json_buffer.seek(0)
+                    st.download_button(label="Download Layout.json", data=json_buffer, file_name="layout.json", mime="application/json")
+                
             else:
                 st.error("Error occurred!!")
     
